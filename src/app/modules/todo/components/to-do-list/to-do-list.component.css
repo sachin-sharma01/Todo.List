@@ -1,0 +1,57 @@
+.todo-actions button {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+  
+  .todo-list-form .mat-form-field {
+   width: 300px;
+   margin-right: 20px;
+  }
+  
+   .todo-list-form .mat-raised-button {
+    margin-left: 10px;
+   }
+  
+   .line-through {
+    text-decoration: line-through;
+   }
+   .todo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem 0;
+  }
+  .todo-name {
+    flex: 1; 
+  }
+  
+  .todo-priority {
+    width: 1rem; 
+    text-align: right; 
+  }
+  
+  .todo-priority {
+    margin-left: 0.5rem; 
+  }
+
+  .priority-high {
+    color: red;
+  }
+  
+  .priority-medium {
+    color: orange;
+  }
+  
+  .priority-low {
+    color: green;
+  }
+  .name-column {
+    width: 50%; 
+    font-size: 1.2rem; 
+  }
+  .no-todos{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 1rem;
+  }

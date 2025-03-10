@@ -8,32 +8,66 @@ export enum TodoStatus {
   InProgress = 'IN_PROGRESS',
 }
 
+export enum TodoPriority {
+  Low = 'LOW',
+  Medium = 'MEDIUM',
+  High = 'HIGH',
+}
 export interface Todo {
   id: number;
-  name?: string;
-  status: TodoStatus;
+  name: string;
+  status?: TodoStatus;
+  priority: TodoPriority;
 }
 
 export interface TodoState {
-    todoList: Todo[];
+  todoList: Todo[];
+  filteredList: Todo[];
 }
 
 export const initialState: TodoState = {
-  todoList: []
-}
+  todoList: [],
+  filteredList: []
+};
 
-const todoReducer = createReducer(
-    initialState,
-    on(actions.getTodosSuccess, (state, { todoList }) => ({
-      ...state,
-      todoList,
-    })),
-    on(actions.changeTodoName, (state, { todo }) => ({
-      ...state,
-      todoList: state.todoList.map(el => (el.id === todo.id) ? {...el, name: todo.name} : el)
-    })),
+const _todoReducer = createReducer(
+  initialState,
+  on(actions.getTodosSuccess, (state, { todoList }) => ({
+    ...state,
+    todoList,
+    filteredList: todoList,
+  })),
+  on(actions.addTodoSuccess, (state, { todo }) => ({
+    ...state,
+    todoList: [...state.todoList, todo],
+    filteredList: [...state.filteredList, todo],
+  })),
+  on(actions.changeTodoName, (state, { todo }) => ({
+    ...state,
+    todoList: state.todoList.map(existingTodo => (existingTodo.id === todo.id) ? { ...existingTodo, name: todo.name } : existingTodo),
+    filteredList: state.filteredList.map(existingTodo => (existingTodo.id === todo.id) ? { ...existingTodo, name: todo.name } : existingTodo)
+  })),
+  on(actions.changeTodoStatus, (state, { todo }) => ({
+    ...state,
+    todoList: state.todoList.map(existingTodo => (existingTodo.id === todo.id) ? { ...existingTodo, status: todo.status } : existingTodo),
+    filteredList: state.filteredList.map(existingTodo => (existingTodo.id === todo.id) ? { ...existingTodo, status: todo.status } : existingTodo)
+  })),
+  on(actions.removeTodoSuccess, (state, { id }) => ({
+    ...state,
+    todoList: state.todoList.filter(existingTodo => existingTodo.id !== id),
+    filteredList: state.filteredList.filter(existingTodo => existingTodo.id !== id)
+  })),
+  on(actions.filterTodos, (state, { status }) => ({
+    ...state,
+    filteredList: state.todoList.filter(existingTodo => existingTodo.status === status)
+  })),
+  on(actions.changeTodoPrioritySuccess, (state, { todo }) => ({
+    ...state,
+    todoList: state.todoList.map(existingTodo => (existingTodo.id === todo.id) ? { ...existingTodo, priority: todo.priority } : existingTodo),
+    filteredList: state.filteredList.map(existingTodo => (existingTodo.id === todo.id) ? { ...existingTodo, priority: todo.priority } : existingTodo)
+  })),
 );
 
-export function reducer(state: TodoState | undefined, action: Action) {
-    return todoReducer(state, action);
+export function todoReducer(state: TodoState | undefined, action: Action) {
+  return _todoReducer(state, action);
 }

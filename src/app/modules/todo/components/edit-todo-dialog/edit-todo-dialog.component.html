@@ -2,10 +2,17 @@
 <div mat-dialog-content>
   <mat-form-field>
     <mat-label>New ToDo name</mat-label>
-    <input matInput [(ngModel)]="newName">
+    <input matInput [(ngModel)]="newName" name="newName" >
   </mat-form-field>
 </div>
+<span>Please select priority</span>
+  <mat-radio-group class="radio-group-column" [(ngModel)]="newPriority" name="newPriority">
+    <mat-radio-button value="LOW">Low</mat-radio-button>
+    <mat-radio-button value="MEDIUM">Medium</mat-radio-button>
+    <mat-radio-button value="HIGH">High</mat-radio-button>
+  </mat-radio-group>
+
 <div mat-dialog-actions align="end">
   <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-button [disabled]="!newName" [mat-dialog-close]="newName" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="onSave()" [disabled]="!newName" [mat-dialog-close]="newName" cdkFocusInitial>Ok</button>
 </div>

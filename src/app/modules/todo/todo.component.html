@@ -4,57 +4,25 @@
       <mat-label>Todo List Item</mat-label>
       <input matInput placeholder="E.g. Send Email" [formControl]="newTodo">
     </mat-form-field>
-    <button mat-raised-button color="primary" [disabled]="newTodo.invalid" (click)="addNewTodo()">Add Todo</button>
+    <mat-form-field>
+      <mat-label>Priority</mat-label>
+      <mat-select [formControl]="todoPriority" [disableOptionCentering]="true" required>
+        <mat-option *ngFor="let priority of priorities" [value]="priority">{{ priority }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" [disabled]="newTodo.invalid || todoPriority.invalid" (click)="addNewTodo()">Add Todo</button>
   </div>
-
-  <mat-tab-group>
-    <mat-tab label="All">
-      <div class="todo-item" *ngFor="let todo of allTodos$ | async">
-        <span>{{ todo.name }}</span>
-
-        <div class="todo-actions">
-          <button mat-mini-fab color="primary" aria-label="Complete" (click)="changeTodoStatus(todo)">
-            <mat-icon>done</mat-icon>
-          </button>
-
-          <button mat-mini-fab color="warn" aria-label="Delete" (click)="removeTodo(todo)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </div>
-      </div>
-      <p class="todo-item" *ngIf="(allTodos$ | async)?.length === 0">No todos</p>
+  <div class="todo-list-form">
+  <mat-tab-group (selectedTabChange)="selectTab($event.index)" mat-align-tabs="center">
+    <mat-tab class="todo-item" label="All">
+      <app-todo-list [todos]="allTodos$ | async" (changeStatus)="changeTodoStatus($event)" (changeName)="changeTodoName($event)" (remove)="removeTodo($event)"></app-todo-list>
     </mat-tab>
-    <mat-tab label="In Progress">
-      <div class="todo-item" *ngFor="let todo of allTodos$ | async">
-        <span>{{ todo.name }}</span>
-
-        <div class="todo-actions">
-          <button mat-mini-fab color="primary" aria-label="Complete" (click)="changeTodoStatus(todo)">
-            <mat-icon>done</mat-icon>
-          </button>
-
-          <button mat-mini-fab color="warn" aria-label="Delete" (click)="removeTodo(todo)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </div>
-      </div>
-      <p class="todo-item" *ngIf="(allTodos$ | async)?.length === 0">No todos in progress</p>
+    <mat-tab class="todo-item" label="In Progress">
+      <app-todo-list [todos]="filteredTodos$ | async" (changeStatus)="changeTodoStatus($event)" (changeName)="changeTodoName($event)" (remove)="removeTodo($event)"></app-todo-list>
     </mat-tab>
-    <mat-tab label="Completed">
-      <div class="todo-item" *ngFor="let todo of allTodos$ | async">
-        <span class="line-through">{{ todo.name }}</span>
-
-        <div class="todo-actions">
-          <button mat-mini-fab color="primary" aria-label="Complete" (click)="changeTodoStatus(todo)">
-            <mat-icon>done</mat-icon>
-          </button>
-
-          <button mat-mini-fab color="warn" aria-label="Delete" (click)="removeTodo(todo)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </div>
-      </div>
-      <p class="todo-item" *ngIf="(allTodos$ | async)?.length === 0">No completed todos</p>
+    <mat-tab class="todo-item" label="Completed">
+      <app-todo-list [todos]="filteredTodos$ | async" (changeStatus)="changeTodoStatus($event)" (changeName)="changeTodoName($event)" (remove)="removeTodo($event)"></app-todo-list>
     </mat-tab>
   </mat-tab-group>
+  </div>
 </div>

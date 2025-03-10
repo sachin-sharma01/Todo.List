@@ -8,21 +8,21 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { TodoEffects } from './modules/store/todo/todo.effects';
-import { reducer, TODO_FEATURE_KEY } from './modules/store/todo/todo.reducer';
-
+import { todoReducer, TODO_FEATURE_KEY } from './modules/store/todo/todo.reducer';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    StoreModule.forRoot(reducer),
+    StoreModule.forRoot({}),
     EffectsModule.forRoot(),
-    StoreModule.forFeature(TODO_FEATURE_KEY, reducer),
+    StoreModule.forFeature(TODO_FEATURE_KEY, todoReducer),
     EffectsModule.forFeature([TodoEffects]),
   ],
   providers: [],
