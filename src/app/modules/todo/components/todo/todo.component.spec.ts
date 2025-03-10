@@ -13,7 +13,7 @@ import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatRadioModule } from '@angular/material/radio';
 import { of } from 'rxjs';
-import { Todo, TodoStatus, TodoPriority } from '../store/todo/todo.reducer';
+import { Todo, TodoStatus, TodoPriority } from '../../../store/todo/todo.reducer';
 import { getTodos, addTodo, removeTodo, changeTodoStatus, changeTodoName, filterTodos } from '@app/modules/store';
 
 describe('TodoComponent', () => {
