@@ -9,7 +9,7 @@
 
   <ng-container matColumnDef="priority">
     <mat-header-cell *matHeaderCellDef > Priority </mat-header-cell>
-    <mat-cell *matCellDef="let todo" class="name-column">
+    <mat-cell *matCellDef="let todo" class="name-column" [ngClass]="{'line-through': todo.status === 'COMPLETE'}">
       {{ todo.priority.toLowerCase() }}
     </mat-cell>
   </ng-container>
@@ -40,6 +40,6 @@
 </mat-table>
 <div *ngIf="!todos?.length">
 <p  class="no-todos" >No tasks available! </p>
-<p  class="no-todos">Looks like you're all set for now. Enjoy the free time and make the most of your day!</p>
+<p  class="no-todos">Looks like you're all set for now.</p>
 </div>
   

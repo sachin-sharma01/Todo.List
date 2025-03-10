@@ -18,7 +18,9 @@
 .mat-tab-group {
   margin-top: 10px;
 }
-
+h2 {
+  margin-top: 1rem;
+}
 mat-form-field {
   padding: 3rem;
 }
